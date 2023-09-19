@@ -1,6 +1,9 @@
+//función escencial para realizar el calculo del presupuesto segun las opciones seleccionadas
 function calcularPresupuesto() {
+    // variable para almacenar el nombre del usuario
     const nombreUsuario = prompt("Por favor, ingresa tu nombre:");
-    // opciones seleccionadas
+
+    // arrays para almacenar opciones seleccionadas
     const opcionesSeleccionadas = [];
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
     for (const checkbox of checkboxes) {
@@ -34,10 +37,11 @@ function calcularPresupuesto() {
         }
     }
 
-    // Mostrar el resultado mediante  un alert()
+    // Mostrar el resultado mediante  un alert.()
     alert(`${nombreUsuario}: el monto total del presupuesto es: €${montoTotal}`);
 }
 
 const calcularBtn = document.getElementById('calcularBtn');
 calcularBtn.addEventListener('click', calcularPresupuesto);
 
+ 
