@@ -36,9 +36,7 @@ funcionalidades.forEach(funcionalidad => {
     label.textContent = `${funcionalidad.herramienta} - €${funcionalidad.precio}`;
 
     input.addEventListener('change', function(){
-        console.log('ESTE ES THIS VALUE', this.value);
         const funcionalidadSeleccionada = funcionalidades.find(f => f.herramienta === this.value )
-        console.log('funcionalidades selec', funcionalidadesSeleccionadas)
         if(this.checked){
             funcionalidadesSeleccionadas.push(funcionalidadSeleccionada);
         }else{
