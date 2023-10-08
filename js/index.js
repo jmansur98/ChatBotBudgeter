@@ -1,23 +1,21 @@
-// Selección de elementos (4) del DOM por ID almacenados en variables
+// selección de elementos (4) del DOM por ID almacenados en variables
 const divInterfaz = document.querySelector('#interfaz');
 const divIntegracion = document.querySelector('#integracion');
 const divGenerador = document.querySelector('#generador');
 const divAutenticador = document.querySelector('#autenticador');
 
 let funcionalidadesSeleccionadas = [];
-let data;  // Variable para almacenar los datos cargados desde el JSON
+let data;  // variable para almacenar los datos cargados desde el JSON
 
 document.addEventListener('DOMContentLoaded', function () {
   fetch('js/objeto.json')
     .then(response => response.json())
     .then(jsonData => {
-      // Almacena los datos cargados en la variable "data"
+      // almacena los datos cargados en la variable "data"
       data = jsonData;
-
-      // Ahora, puedes acceder a los datos utilizando la variable "data" en lugar de "funcionalidades"
       console.log(data);
 
-      //Se utiliza un bucle forEach" para iterar a través de cada objeto del arrays  
+      //se usa un bucle "forEach" para iterar a través de cada objeto del arrays  
       data.forEach(funcionalidad => {
         const input = document.createElement('input');
         input.type = 'checkbox';
@@ -47,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log('funcionalidades seleccionadas', funcionalidadesSeleccionadas)
         });
 
-        // Agregar elementos al DOM según el tipo de funcionalidad
+        // agrega elementos al DOM según el tipo de funcionalidad
         if (funcionalidad.tipo === 'interfaz') {
           divInterfaz.appendChild(input);
           divInterfaz.appendChild(label);
@@ -72,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error al cargar el archivo JSON:', error));
 
-  // Función para calcular el monto total que toma el array "funcionalidadesSeleccionadas" como argumento
+  // funcion para calcular el monto total que toma el array "funcionalidadesSeleccionadas" como argumento
   // esta función utiliza el método "reduce" para calcular el monto total seleccionado sumando los precios
   function calcularMontoTotal(funcionalidadesSeleccionadas) {
     return funcionalidadesSeleccionadas.reduce((total, funcionalidad) => total + funcionalidad.precio, 0);
