@@ -1,0 +1,52 @@
+[
+    {
+        "tipo": "interfaz",
+        "herramienta": "Messenger",
+        "precio": 100
+    },
+    {
+        "tipo": "interfaz",
+        "herramienta": "Telegram",
+        "precio": 154
+    },
+    {
+        "tipo": "interfaz",
+        "herramienta": "Whatsapp",
+        "precio": 122
+    },
+    {
+        "tipo": "generador",
+        "herramienta": "ManyChat",
+        "precio": 500
+    },
+    {
+        "tipo": "generador",
+        "herramienta": "Chatfuel",
+        "precio": 678
+    },
+    {
+        "tipo": "generador",
+        "herramienta": "Personalizada",
+        "precio": 100
+    },
+    {
+        "tipo": "integracion",
+        "herramienta": "Hubspot",
+        "precio": 100
+    },
+    {
+        "tipo": "integracion",
+        "herramienta": "Salesforce",
+        "precio": 100
+    },
+    {
+        "tipo": "autenticador",
+        "herramienta": "Google",
+        "precio": 100
+    },
+    {
+        "tipo": "autenticador",
+        "herramienta": "Facebook",
+        "precio": 100
+    }
+]
