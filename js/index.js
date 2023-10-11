@@ -6,14 +6,24 @@ const divAutenticador = document.querySelector('#autenticador');
 
 let funcionalidadesSeleccionadas = [];
 let data;  // variable para almacenar los datos cargados desde el JSON
-
+let nombreEmpresaInput;
 document.addEventListener('DOMContentLoaded', function () {
+  //recuperar funcionalidades seleccionadas desde localStorage
+  const funcionalidadesGuardadas = JSON.parse(localStorage.getItem('funcionalidadesSeleccionadas'));
+  
+  // recuperar nombr la empresa desde localStorage
+  const nombreEmpresaGuardado = localStorage.getItem('nombreEmpresa');
+    if (funcionalidadesGuardadas) {
+    funcionalidadesSeleccionadas = funcionalidadesGuardadas;
+  }
+  
+  if (nombreEmpresaGuardado) {
+    nombreEmpresaInput.value = nombreEmpresaGuardado;
+  }
   fetch('js/objeto.json')
     .then(response => response.json())
     .then(jsonData => {
-      // almacena los datos cargados en la variable "data"
       data = jsonData;
-      console.log(data);
 
       //se usa un bucle "forEach" para iterar a través de cada objeto del arrays  
       data.forEach(funcionalidad => {
@@ -41,8 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
               funcionalidadesSeleccionadas.splice(index, 1);
             }
           }
-
-          console.log('funcionalidades seleccionadas', funcionalidadesSeleccionadas)
         });
 
         // agrega elementos al DOM según el tipo de funcionalidad
@@ -79,7 +87,12 @@ document.addEventListener('DOMContentLoaded', function () {
   //función para crear un objeto de presupuesto
   //solicita al usuario que ingrese el nombre de su empresa utilizando el método "prompt"
   function crearPresupuesto() {
-    const nombreUsuario = prompt("Por favor, ingresa el nombre de su empresa:");
+    const nombreEmpresaInput = document.getElementById('nombreEmpresa');
+    const nombreUsuario = nombreEmpresaInput.value;
+    //guardar las funcionalidades seleccionadas en localStorage
+    localStorage.setItem('funcionalidadesSeleccionadas', 
+    JSON.stringify(funcionalidadesSeleccionadas));
+
 
     //función calcular el monto total de las funcionalidades seleccionadas
     const montoTotal = calcularMontoTotal(funcionalidadesSeleccionadas);
@@ -97,8 +110,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const calcularBtn = document.getElementById('calcularBtn');
 
   calcularBtn.addEventListener('click', () => {
+    // guardar funcionalidades seleccionadas en localStorage
+    localStorage.setItem('funcionalidadesSeleccionadas', JSON.stringify(funcionalidadesSeleccionadas));
     const presupuesto = crearPresupuesto();
     const resultadoElement = document.getElementById('resultado');
-    resultadoElement.textContent = `${presupuesto.nombreUsuario}: El monto total del presupuesto es: €${presupuesto.montoTotal}`;
+    resultadoElement.textContent = `${presupuesto.nombreUsuario} su presupuesto total es: €${presupuesto.montoTotal}`;
   });
 });
