@@ -4,15 +4,43 @@ body {
   margin: 0;
   padding: 0;
 }
-
+#montoTotal {
+  position: fixed;
+  top: 10px; 
+  right: 29px; 
+  background: #ffffff;
+  box-shadow:  -9px 9px 17px #626060,9px -9px 17px #ffffff;
+  border: 3px solid #007bff; 
+  border-radius: 10px;
+  padding: 20px; 
+}
+#navbar {
+  position: fixed;
+  top: 10px;
+  left: 29px;
+  box-shadow: 0 2px 4px rgba(240, 239, 239, 0.1); 
+  z-index: 1000; 
+}
+.custom-dropdown-toggle {
+  top: 100px;
+  left: 29px;
+  border: none;
+  color: #007bff; 
+  padding: 0; 
+  font-size: 30px; 
+}
+.dropdown-menu{
+  padding: 10px;
+  width: 250px;
+  border: 3px solid #007bff;
+}
 .container {
-  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
-  border: 1px solid #007bff; 
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 1.2);
+  width: 50%;
 }
 
 h1 {

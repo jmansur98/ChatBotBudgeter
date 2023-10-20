@@ -4,22 +4,49 @@ const divIntegracion = document.querySelector('#integracion');
 const divGenerador = document.querySelector('#generador');
 const divAutenticador = document.querySelector('#autenticador');
 
+console.log('ESTA FUNCIONANDO');
 let funcionalidadesSeleccionadas = [];
 let data;  // variable para almacenar los datos cargados desde el JSON
 let nombreEmpresaInput;
+//función para actualizar el menú desplegable
+function actualizarMenuDesplegable() {
+  const dropdownMenu = document.querySelector('.dropdown-center .dropdown-menu');
+  dropdownMenu.innerHTML = ''; // saca el contenido actual del menú
+
+  // agrega al menu las funcionalidades seleccionadas 
+  funcionalidadesSeleccionadas.forEach(funcionalidadSeleccionada => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${funcionalidadSeleccionada.herramienta} - €${funcionalidadSeleccionada.precio}`;
+    dropdownMenu.appendChild(listItem);
+  });
+}
 document.addEventListener('DOMContentLoaded', function () {
   //recuperar funcionalidades seleccionadas desde localStorage
   const funcionalidadesGuardadas = JSON.parse(localStorage.getItem('funcionalidadesSeleccionadas'));
   
   // recuperar nombr la empresa desde localStorage
   const nombreEmpresaGuardado = localStorage.getItem('nombreEmpresa');
-    if (funcionalidadesGuardadas) {
-    funcionalidadesSeleccionadas = funcionalidadesGuardadas;
-  }
+
+  nombreEmpresaInput = document.getElementById('nombreEmpresa');
+
+   
   
   if (nombreEmpresaGuardado) {
     nombreEmpresaInput.value = nombreEmpresaGuardado;
   }
+  
+  if (funcionalidadesGuardadas){
+    funcionalidadesSeleccionadas = funcionalidadesGuardadas;
+    
+    // marcar los checkbox  segun las selecciones guardadas
+    funcionalidadesSeleccionadas.forEach(funcionalidadSeleccionada => {
+      const checkbox = document.getElementById('opcion' + funcionalidadSeleccionada.herramienta);
+      if (checkbox) {
+        checkbox.checked = true;
+      }
+    });
+  }
+
   fetch('js/objeto.json')
     .then(response => response.json())
     .then(jsonData => {
@@ -51,7 +78,14 @@ document.addEventListener('DOMContentLoaded', function () {
               funcionalidadesSeleccionadas.splice(index, 1);
             }
           }
+          actualizarMenuDesplegable();
+
+        // actualizar el presupuesto en cada cambio
+        const montoTotal = calcularMontoTotal(funcionalidadesSeleccionadas);
+        const resultadoElement = document.getElementById('resultado');
+        calcularMontoTotal(funcionalidadesSeleccionadas);
         });
+        
 
         // agrega elementos al DOM según el tipo de funcionalidad
         if (funcionalidad.tipo === 'interfaz') {
@@ -81,8 +115,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // funcion para calcular el monto total que toma el array "funcionalidadesSeleccionadas" como argumento
   // esta función utiliza el método "reduce" para calcular el monto total seleccionado sumando los precios
   function calcularMontoTotal(funcionalidadesSeleccionadas) {
-    return funcionalidadesSeleccionadas.reduce((total, funcionalidad) => total + funcionalidad.precio, 0);
-  }
+    const montoTotal = funcionalidadesSeleccionadas.reduce((total, funcionalidad) => total + funcionalidad.precio, 0);
+    const montoTotalElement = document.getElementById('montoTotal');
+    montoTotalElement.textContent = `Presupuesto total: €${montoTotal.toFixed(2)}`;
+    return montoTotal;  }
 
   //función para crear un objeto de presupuesto
   //solicita al usuario que ingrese el nombre de su empresa utilizando el método "prompt"
@@ -104,16 +140,4 @@ document.addEventListener('DOMContentLoaded', function () {
       montoTotal,
     };
   }
-
-  //evento del botón de cálculo. Se selecciona un botón con el ID "calcularBtn" y se agrega un evento "click" a él
-  //cuando el botón se hace clic, se llama a la función "crearPresupuesto" para calcular el presupuesto
-  const calcularBtn = document.getElementById('calcularBtn');
-
-  calcularBtn.addEventListener('click', () => {
-    // guardar funcionalidades seleccionadas en localStorage
-    localStorage.setItem('funcionalidadesSeleccionadas', JSON.stringify(funcionalidadesSeleccionadas));
-    const presupuesto = crearPresupuesto();
-    const resultadoElement = document.getElementById('resultado');
-    resultadoElement.textContent = `${presupuesto.nombreUsuario} su presupuesto total es: €${presupuesto.montoTotal}`;
-  });
 });
