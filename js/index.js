@@ -8,18 +8,35 @@ console.log('ESTA FUNCIONANDO');
 let funcionalidadesSeleccionadas = [];
 let data;  // variable para almacenar los datos cargados desde el JSON
 let nombreEmpresaInput;
+
+function calcularMontoTotal(funcionalidadesSeleccionadas) {
+  const montoTotal = funcionalidadesSeleccionadas.reduce((total, funcionalidad) => total + funcionalidad.precio, 0);
+  const montoTotalElement = document.getElementById('montoTotal');
+  montoTotalElement.textContent = `Presupuesto total: €${montoTotal.toFixed(2)}`;
+  return montoTotal; 
+ }
 //función para actualizar el menú desplegable
 function actualizarMenuDesplegable() {
-  const dropdownMenu = document.querySelector('.dropdown-center .dropdown-menu');
-  dropdownMenu.innerHTML = ''; // saca el contenido actual del menú
+  const dropdownItems = document.querySelector('.dropdown-items');
+  const dropdownTotalIVA = document.querySelector('.total-iva');
+  dropdownItems.innerHTML = ''; // Limpiar los ítems antes de actualizar
 
-  // agrega al menu las funcionalidades seleccionadas 
+  //agrega al menú las funcionalidades seleccionadas 
   funcionalidadesSeleccionadas.forEach(funcionalidadSeleccionada => {
-    const listItem = document.createElement('li');
+    const listItem = document.createElement('div');
     listItem.textContent = `${funcionalidadSeleccionada.herramienta} - €${funcionalidadSeleccionada.precio}`;
-    dropdownMenu.appendChild(listItem);
+    dropdownItems.appendChild(listItem);
   });
+  
+  //monto total con IVA
+  const montoTotalSinIVA = calcularMontoTotal(funcionalidadesSeleccionadas);
+  const iva = montoTotalSinIVA * 0.21; 
+  const montoTotalConIVA = montoTotalSinIVA + iva;
+
+  //agrega el total con IVA al menú desplegable
+  dropdownTotalIVA.textContent = `Total + IVA (21%): €${montoTotalConIVA.toFixed(2)}`;
 }
+
 document.addEventListener('DOMContentLoaded', function () {
   //recuperar funcionalidades seleccionadas desde localStorage
   const funcionalidadesGuardadas = JSON.parse(localStorage.getItem('funcionalidadesSeleccionadas'));
@@ -29,8 +46,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   nombreEmpresaInput = document.getElementById('nombreEmpresa');
 
-   
-  
   if (nombreEmpresaGuardado) {
     nombreEmpresaInput.value = nombreEmpresaGuardado;
   }
@@ -59,9 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
         input.id = 'opcion' + funcionalidad.herramienta;
         input.value = funcionalidad.herramienta;
 
-        //para cada funcionalidad se crea un elemento de entrada "input" de tipo "checkbox" y un elemento "label"
         //"input" se utiliza para permitir al usuario seleccionar la funcionalidad, y el "label" se utiliza para mostrar el nombre de la herramienta y su precio.
-        //se agregaron atributos como "id", "value" y "htmlFor" para asociar los elementos "input" y "label" correctamente.
         const label = document.createElement('label');
         label.htmlFor = input.id;
         label.textContent = `${funcionalidad.herramienta} - €${funcionalidad.precio}`;
@@ -78,11 +91,10 @@ document.addEventListener('DOMContentLoaded', function () {
               funcionalidadesSeleccionadas.splice(index, 1);
             }
           }
-          actualizarMenuDesplegable();
+          actualizarMenuDesplegable(); 
+          calcularMontoTotal(funcionalidadesSeleccionadas);
 
         // actualizar el presupuesto en cada cambio
-        const montoTotal = calcularMontoTotal(funcionalidadesSeleccionadas);
-        const resultadoElement = document.getElementById('resultado');
         calcularMontoTotal(funcionalidadesSeleccionadas);
         });
         
@@ -112,32 +124,4 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error al cargar el archivo JSON:', error));
 
-  // funcion para calcular el monto total que toma el array "funcionalidadesSeleccionadas" como argumento
-  // esta función utiliza el método "reduce" para calcular el monto total seleccionado sumando los precios
-  function calcularMontoTotal(funcionalidadesSeleccionadas) {
-    const montoTotal = funcionalidadesSeleccionadas.reduce((total, funcionalidad) => total + funcionalidad.precio, 0);
-    const montoTotalElement = document.getElementById('montoTotal');
-    montoTotalElement.textContent = `Presupuesto total: €${montoTotal.toFixed(2)}`;
-    return montoTotal;  }
-
-  //función para crear un objeto de presupuesto
-  //solicita al usuario que ingrese el nombre de su empresa utilizando el método "prompt"
-  function crearPresupuesto() {
-    const nombreEmpresaInput = document.getElementById('nombreEmpresa');
-    const nombreUsuario = nombreEmpresaInput.value;
-    //guardar las funcionalidades seleccionadas en localStorage
-    localStorage.setItem('funcionalidadesSeleccionadas', 
-    JSON.stringify(funcionalidadesSeleccionadas));
-
-
-    //función calcular el monto total de las funcionalidades seleccionadas
-    const montoTotal = calcularMontoTotal(funcionalidadesSeleccionadas);
-
-    //devuelve un objeto que contiene nombre del usuario, funcionalidades seleccionadas y monto total
-    return {
-      nombreUsuario,
-      funcionalidadesSeleccionadas,
-      montoTotal,
-    };
-  }
 });

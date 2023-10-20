@@ -15,15 +15,16 @@
     <header>
         <div id="montoTotal">Presupuesto total: €0.00</div>
         <div id="navbar" class="dropdown-center">
-            <!-- Eliminamos las clases "btn" y "btn-secondary" que aplican estilos de Bootstrap -->
             <button class="custom-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="false">
                 <i class="fas fa-filter"></i>
             </button>
-            <ul class="dropdown-menu" id="myDropdown">
-                <li><a class="dropdown-item" href="#"></a></li>
-                <li><a class="dropdown-item" href="#"></a></li>
-                <li><a class="dropdown-item" href="#"></a></li>
-            </ul>
+            <div class="dropdown-menu custom-dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-items">
+                    <!-- Aquí se mostrarán los ítems seleccionados -->
+                </div>
+                <div class="total-iva">
+                    <!-- Aquí se mostrará el total con IVA -->
+                </div>
         </div>
     </header>
     <div class="container">

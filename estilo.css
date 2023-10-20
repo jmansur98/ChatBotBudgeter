@@ -10,7 +10,7 @@ body {
   right: 29px; 
   background: #ffffff;
   box-shadow:  -9px 9px 17px #626060,9px -9px 17px #ffffff;
-  border: 3px solid #007bff; 
+  border: 3px solid #312666; 
   border-radius: 10px;
   padding: 20px; 
 }
@@ -25,14 +25,14 @@ body {
   top: 100px;
   left: 29px;
   border: none;
-  color: #007bff; 
+  color: #312666; 
   padding: 0; 
   font-size: 30px; 
 }
 .dropdown-menu{
   padding: 10px;
   width: 250px;
-  border: 3px solid #007bff;
+  border: 3px solid #312666;
 }
 .container {
   margin: 0 auto;
@@ -44,22 +44,24 @@ body {
 }
 
 h1 {
+  font-family: Rockwell;
   text-align: center;
-  color: #007bff; 
+  color: #312666; 
 }
 
 h2 {
+  font-family: Ubuntu;
   font-size: 1.5em; 
   margin-top: 15px;
-  color: #007bff;
+  color: #312666;
 }
 
 p {
-  color: #333;
+  color: #312666;
 }
 
 .seccion {
-  border: 2px solid #007bff; 
+  border: 2px solid #312666; 
   background-color: #f9f9f9;
   padding: 15px;
   margin-bottom: 20px;
@@ -69,7 +71,7 @@ p {
 .apartado {
   display: block;
   margin-bottom: 10px;
-  color: #333;
+  color: #312666;
 }
 
 input#nombreEmpresa {
@@ -82,25 +84,11 @@ input#nombreEmpresa {
 }
 
 input#nombreEmpresa:focus {
-  border-color: #007bff; 
+  border-color: #312666; 
   outline: none; 
 }
 
-.calcular-btn {
-  display: block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #0c2e5c; 
-  color: #fff;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1.2em; 
-}
 
-.calcular-btn:hover {
-  background-color: #0056b3;
-  transition: background-color 0.1s;
-}
 
 .resultado {
   font-weight: bold;
